@@ -50,6 +50,13 @@ def index():
     categories_names = list(categories_mean.index)
     
     
+    message_counts = []
+    column_count = []
+    for name in categories_names:
+          message_counts.append(df[df['message'].map(lambda x:name in x.lower())].shape[0])
+          column_count.append(df[df[name] == 1].shape[0])
+    
+    
     
     # create visuals
     graphs = [
@@ -82,6 +89,35 @@ def index():
 
             'layout': {
                 'title': 'Distribution of Message Categories',
+                'yaxis': {
+                    'title': "Percentage"
+                },
+                'xaxis': {
+                    'title': "Category"
+                }
+            }
+        },
+        
+                        {
+            'data': [
+                Bar(
+                    x=categories_names,
+                    y=column_count,
+                    name='Category'
+                ),
+                   Bar(
+                    x=categories_names,
+                    y=message_counts,
+                    name='Presence in message',
+                    width=0.6
+                )
+                
+            ],
+
+            'layout': {
+                'barmode':'overlay',
+                'showlegend':'True', 
+                'title': 'Category name present in message vs actual category count',
                 'yaxis': {
                     'title': "Percentage"
                 },
