@@ -20,6 +20,9 @@ from sklearn.svm import LinearSVC
 from sklearn.multiclass import OneVsRestClassifier
 from joblib import dump, load
 
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
+
 def load_data(database_filepath):
     '''
     This function loads data from given sql path.
@@ -69,16 +72,16 @@ def build_model():
     INPUT: None
     OUTPUT: returns best pipeline model
     '''
-        
+    #using LinearSVC as it is better for text classification
     pipeline = Pipeline([
                 ('vect',CountVectorizer(tokenizer=tokenize)),
                 ('tfidf', TfidfTransformer()),
-                ('clf',MultiOutputClassifier(RandomForestClassifier()))
+                ('clf',MultiOutputClassifier(OneVsRestClassifier(LinearSVC(random_state = 123))))
             ])
     
     parameters = {
                 'tfidf__smooth_idf':[True, False],
-                'clf__estimator__n_estimators': [10, 20]
+                'clf__estimator__estimator__C': [1, 5]
              }
 
     cv = GridSearchCV(pipeline, param_grid=parameters)
