@@ -36,4 +36,10 @@ Deploy model on Flask App:
 ### Preview of webapp:
 
 <img src="https://github.com/Vaibhav3M/DisasterResponse-ML-Pipeline/blob/master/app/preview.png" height="800"/>
-		
+	
+	
+## License 
+
+
+[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://github.com/vaibhav3m)
+
